@@ -15,7 +15,7 @@
 
 <body>
 
-<%@include file="../include/include_nav.jsp" %>
+<%@include file="../include/include_nav.jsp"%>
 
 <div class="container-fluid">
     <div class="row">

@@ -15,7 +15,7 @@
 
 <body>
 
-<%@include file="../include/include_nav.jsp"%>
+<%@include file="../include/include_nav.jsp" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -61,7 +61,7 @@
                             <tbody>
                             <c:if test="${empty requestScope.pageInfo.list}">
                                 <tr>
-                                    <td colspan="6" align="center"> 抱歉!数据为空~ </td>
+                                    <td colspan="6" align="center"> 抱歉!数据为空~~~ </td>
                                 </tr>
                             </c:if>
                             <c:if test="${!empty requestScope.pageInfo.list}">

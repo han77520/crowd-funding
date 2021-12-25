@@ -4,14 +4,17 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.whw.crowd.entity.Admin;
 import com.whw.crowd.entity.AdminExample;
+import com.whw.crowd.exception.LoginAcctAleadyInUseException;
 import com.whw.crowd.exception.LoginFailedException;
 import com.whw.crowd.mapper.AdminMapper;
 import com.whw.crowd.service.api.AdminService;
 import com.whw.crowd.util.CrowdConstant;
 import com.whw.crowd.util.CrowdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +32,25 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void saveAdmin(Admin admin) {
 
-        adminMapper.insert(admin);
+        // 1.密码加密
+        String userPswd = admin.getUserPswd();
+        userPswd= CrowdUtil.md5(userPswd);
+
+        admin.setUserPswd(userPswd);
+
+        // 2.生成创建时间
+        admin.setCreateTime( new SimpleDateFormat("yyyy-MM-dd").format(new Date()) );
+
+        try {
+            adminMapper.insert(admin);
+        }  catch (Exception e) {
+
+            e.printStackTrace();
+
+            if (e instanceof DuplicateKeyException) {
+                throw new LoginAcctAleadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+            }
+        }
     }
 
     @Override
@@ -81,6 +102,12 @@ public class AdminServiceImpl implements AdminService {
 
         // 7.如果一致则返回 Admin 对象
         return admin;
+    }
+
+    @Override
+    public int removeAdmin(Integer id) {
+        int delete = adminMapper.deleteByPrimaryKey(id);
+        return delete;
     }
 
     @Override

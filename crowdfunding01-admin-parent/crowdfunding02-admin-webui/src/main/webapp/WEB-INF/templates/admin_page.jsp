@@ -17,33 +17,33 @@
     // 生成页码导航条
     function initPagination() {
         // 获取总记录数
-        var totalRecord = "${requestScope.pageInfo.total}";
+        var totalRecord = ${requestScope.pageInfo.total};
 
         // 创建Json对象用于存储PageInfo对象的属性
         var properties = {
             num_edge_entries: 3, // 边缘页数
-            num_display_entries:5, // 主体页数
-            callback:pageSelectCallback, // 点击页码之后的回调函数
-            item_per_page:${requestScope.pageInfo.pageSize}, // 每页显示条目数
+            num_display_entries: 5, // 主体页数
+            callback: pageSelectCallback, // 点击页码之后的回调函数
+            items_per_page:${requestScope.pageInfo.pageSize}, // 每页显示条目数
             current_page:${requestScope.pageInfo.pageNum - 1}, // 当前页数
             prev_text: "上一页",
             next_text: "下一页"
         };
 
         // 生成页码导航条
-        $("#Pagination").pagination(totalRecord,properties);
-    };
+        $("#Pagination").pagination(totalRecord, properties);
+    }
 
     // 用户点击 "上一页、下一页、1、2、3......"这样的页码时调用这个函数实现页面跳转
     // 回调函数的含义：声明出来以后交给系统或者框架使用
     // pageIndex是Pagination传进来的页码数(从0开始)
-    function pageSelectCallback(pageIndex,jQuery) {
+    function pageSelectCallback(pageIndex, jQuery) {
 
         // 根据pageIndex计算得到pageNum
         var pageNum = pageIndex + 1;
 
         // 跳转路径
-        window.location.href = "admin/get/page?pageNum="+pageNum+"&keyword=${param.keyword}";
+        window.location.href = "admin/get/page?pageNum=" + pageNum + "&keyword=${param.keyword}";
 
         // 取消点击超链接的默认行为
         return false;
@@ -71,18 +71,19 @@
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">查询条件</div>
-                                <input name="keyword" class="form-control has-success" type="text" placeholder="请输入查询条件">
+                                <input name="keyword" class="form-control has-success" type="text"
+                                       placeholder="请输入查询条件">
                             </div>
                         </div>
-                        <button type="submit"  class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询
+                        <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询
                         </button>
                     </form>
                     <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;">
                         <i class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
-                    <button type="button" class="btn btn-primary" style="float:right;"
-                            onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增
-                    </button>
+                    <a style="float:right" class="btn btn-primary" href="admin/to/add">
+                        <i class="glyphicon glyphicon-plus"></i> 新增
+                    </a>
                     <br>
                     <hr style="clear:both;">
                     <div class="table-responsive">
@@ -100,36 +101,38 @@
                             <tbody>
                             <c:if test="${empty requestScope.pageInfo.list}">
                                 <tr>
-                                    <td colspan="6" align="center"> 抱歉!数据为空~~~ </td>
+                                    <td colspan="6" align="center"> 抱歉!数据为空~~~</td>
                                 </tr>
                             </c:if>
                             <c:if test="${!empty requestScope.pageInfo.list}">
-                              <c:forEach items="${requestScope.pageInfo.list}" var="admin" varStatus="myStatus">
-                                  <tr>
-                                      <td>${myStatus.count}</td>
-                                      <td><input type="checkbox"></td>
-                                      <td>${admin.loginAcct}</td>
-                                      <td>${admin.userName}</td>
-                                      <td>{admin.email}</td>
-                                      <td>
-                                          <button type="button" class="btn btn-success btn-xs"><i
-                                                  class=" glyphicon glyphicon-check"></i></button>
-                                          <button type="button" class="btn btn-primary btn-xs"><i
-                                                  class=" glyphicon glyphicon-pencil"></i></button>
-                                          <c:if test="${empty param.keyword}">
-                                              <a href="admin/remove/${admin.id}/${param.pageNum}" class="btn btn-danger btn-xs">
-                                                  <i class=" glyphicon glyphicon-remove"></i></button>
-                                              </a>
-                                          </c:if>
-                                          <c:if test="${!empty param.keyword}">
-                                              <a href="admin/remove/${admin.id}/${param.pageNum}/${param.keyword}" class="btn btn-danger btn-xs">
-                                                  <i class=" glyphicon glyphicon-remove"></i></button>
-                                              </a>
-                                          </c:if>
-                                      </td>
-                                  </tr>
+                                <c:forEach items="${requestScope.pageInfo.list}" var="admin" varStatus="myStatus">
+                                    <tr>
+                                        <td>${myStatus.count}</td>
+                                        <td><input type="checkbox"></td>
+                                        <td>${admin.loginAcct}</td>
+                                        <td>${admin.userName}</td>
+                                        <td>${admin.email}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-xs"><i
+                                                    class=" glyphicon glyphicon-check"></i></button>
+                                            <button type="button" class="btn btn-primary btn-xs"><i
+                                                    class=" glyphicon glyphicon-pencil"></i></button>
+                                            <c:if test="${empty param.keyword}">
+                                                <a href="admin/remove/${admin.id}/${param.pageNum}"
+                                                   class="btn btn-danger btn-xs">
+                                                    <i class=" glyphicon glyphicon-remove"></i></button>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${!empty param.keyword}">
+                                                <a href="admin/remove/${admin.id}/${param.pageNum}/${param.keyword}"
+                                                   class="btn btn-danger btn-xs">
+                                                    <i class=" glyphicon glyphicon-remove"></i></button>
+                                                </a>
+                                            </c:if>
+                                        </td>
+                                    </tr>
 
-                              </c:forEach>
+                                </c:forEach>
                             </c:if>
 
                             </tbody>

@@ -2,10 +2,12 @@ package com.whw.crowd.mvc.config;
 
 import com.google.gson.Gson;
 import com.whw.crowd.exception.AccessForbiddenException;
+import com.whw.crowd.exception.LoginAcctAleadyInUseException;
 import com.whw.crowd.exception.LoginFailedException;
 import com.whw.crowd.util.CrowdConstant;
 import com.whw.crowd.util.CrowdUtil;
 import com.whw.crowd.util.ResultEntity;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,16 +49,25 @@ public class CrowdExceptionResolver {
         return modelAndView;
     }
 
+    @ExceptionHandler(value = LoginAcctAleadyInUseException.class)
+    public ModelAndView resolveLoginAcctAleadyInUseException(LoginAcctAleadyInUseException exception,
+                                                HttpServletRequest request,
+                                                HttpServletResponse response) throws IOException {
+        ModelAndView modelAndView = commonResolver("admin_add", exception, request, response);
 
-//    @ExceptionHandler(LoginFailedException.class)
-//    public ModelAndView resolveLoginFailedException(LoginFailedException exception,
-//                                                    HttpServletRequest request,
-//                                                    HttpServletResponse response){
-//        ModelAndView modelAndView = commonResolver("admin_login", exception, request, response);
-//
-//        return modelAndView;
-//    }
+        return modelAndView;
+    }
 
+
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public ModelAndView resolveRuntimeException(RuntimeException exception,
+                                                    HttpServletRequest request,
+                                                    HttpServletResponse response) throws IOException {
+        ModelAndView modelAndView = commonResolver("system-errors", exception, request, response);
+
+        return modelAndView;
+    }
 
     /**
      * 抽取处理异常的公共部分

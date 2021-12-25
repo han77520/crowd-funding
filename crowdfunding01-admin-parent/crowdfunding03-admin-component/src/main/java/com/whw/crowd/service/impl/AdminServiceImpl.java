@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.whw.crowd.entity.Admin;
 import com.whw.crowd.entity.AdminExample;
 import com.whw.crowd.exception.LoginAcctAleadyInUseException;
+import com.whw.crowd.exception.LoginAcctAleadyInUseForUpdateException;
 import com.whw.crowd.exception.LoginFailedException;
 import com.whw.crowd.mapper.AdminMapper;
 import com.whw.crowd.service.api.AdminService;
@@ -111,6 +112,25 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin selectById(Integer adminId) {
+        Admin admin = adminMapper.selectByPrimaryKey(adminId);
+        return admin;
+    }
+
+    @Override
+    public void updatAdmin(Admin admin) {
+        try {
+            adminMapper.updateByPrimaryKeySelective(admin);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (e instanceof DuplicateKeyException) {
+                throw new LoginAcctAleadyInUseForUpdateException(CrowdConstant.MESSAGE_LOGIN_ACCT_ALREADY_IN_USE);
+            }
+        }
+    }
+
+    @Override
     public PageInfo<Admin> getPageInfo(String keyword, Integer pageNum, Integer pageSize) {
 
         // 1.调用PageHelper的静态方法开启分页功能
@@ -123,7 +143,5 @@ public class AdminServiceImpl implements AdminService {
         // 3.将Page对象封装到PageInfo中
         return new PageInfo<>(admins);
     }
-
-
 
 }

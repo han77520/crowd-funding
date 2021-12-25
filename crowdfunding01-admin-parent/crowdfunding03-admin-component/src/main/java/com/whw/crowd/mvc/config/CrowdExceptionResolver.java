@@ -3,6 +3,7 @@ package com.whw.crowd.mvc.config;
 import com.google.gson.Gson;
 import com.whw.crowd.exception.AccessForbiddenException;
 import com.whw.crowd.exception.LoginAcctAleadyInUseException;
+import com.whw.crowd.exception.LoginAcctAleadyInUseForUpdateException;
 import com.whw.crowd.exception.LoginFailedException;
 import com.whw.crowd.util.CrowdConstant;
 import com.whw.crowd.util.CrowdUtil;
@@ -58,7 +59,14 @@ public class CrowdExceptionResolver {
         return modelAndView;
     }
 
+    @ExceptionHandler(value = LoginAcctAleadyInUseForUpdateException.class)
+    public ModelAndView resolveLoginAcctAleadyInUseForUpdateException(LoginAcctAleadyInUseForUpdateException exception,
+                                                             HttpServletRequest request,
+                                                             HttpServletResponse response) throws IOException {
+        ModelAndView modelAndView = commonResolver("system-errors", exception, request, response);
 
+        return modelAndView;
+    }
 
     @ExceptionHandler(value = RuntimeException.class)
     public ModelAndView resolveRuntimeException(RuntimeException exception,

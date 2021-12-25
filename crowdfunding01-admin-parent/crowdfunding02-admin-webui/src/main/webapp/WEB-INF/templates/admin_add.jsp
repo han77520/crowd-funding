@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputuserPswd">登录密码</label>
-                            <input type="text" name="userPswd" class="form-control" id="exampleInputuserPswd" placeholder="请输入登录密码">
+                            <input type="password" name="userPswd" class="form-control" id="exampleInputuserPswd" placeholder="请输入登录密码">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputuserName">登录昵称</label>

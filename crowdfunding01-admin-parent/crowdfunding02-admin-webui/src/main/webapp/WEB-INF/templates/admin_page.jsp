@@ -115,15 +115,20 @@
                                         <td>
                                             <button type="button" class="btn btn-success btn-xs"><i
                                                     class=" glyphicon glyphicon-check"></i></button>
-                                            <button type="button" class="btn btn-primary btn-xs"><i
-                                                    class=" glyphicon glyphicon-pencil"></i></button>
                                             <c:if test="${empty param.keyword}">
+                                                <a href="admin/to/edit/${admin.id}/${param.pageNum}" class="btn btn-primary btn-xs">
+                                                    <i class=" glyphicon glyphicon-pencil"></i>
+                                                </a>
                                                 <a href="admin/remove/${admin.id}/${param.pageNum}"
                                                    class="btn btn-danger btn-xs">
                                                     <i class=" glyphicon glyphicon-remove"></i></button>
                                                 </a>
                                             </c:if>
                                             <c:if test="${!empty param.keyword}">
+                                                <a href="admin/to/edit/${admin.id}/${param.pageNum}/${param.keyword}"
+                                                   class="btn btn-primary btn-xs">
+                                                    <i class=" glyphicon glyphicon-pencil"></i>
+                                                </a>
                                                 <a href="admin/remove/${admin.id}/${param.pageNum}/${param.keyword}"
                                                    class="btn btn-danger btn-xs">
                                                     <i class=" glyphicon glyphicon-remove"></i></button>

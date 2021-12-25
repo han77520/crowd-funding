@@ -20,4 +20,5 @@ public class CrowdConstant {
 
 
     public static final String ATTR_NAME_PAGE_INFO = "pageInfo";
+    public static final String ATTER_NAME_EDIT_ADMIN= "editAdmin";
 }

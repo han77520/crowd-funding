@@ -1,7 +1,9 @@
 package com.whw.crowd.test;
 
 import com.whw.crowd.entity.Admin;
+import com.whw.crowd.entity.Role;
 import com.whw.crowd.mapper.AdminMapper;
+import com.whw.crowd.mapper.RoleMapper;
 import com.whw.crowd.service.api.AdminService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +35,9 @@ public class CrowdTest {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Test
     public void testLog() {
         Logger logger = LoggerFactory.getLogger(CrowdTest.class);
@@ -54,14 +59,21 @@ public class CrowdTest {
     }
 
     @Test
-    public void testMapper() {
+    public void testAdminMapper() {
 
         for (int i = 0; i < 333; i++) {
             Admin admin = new Admin(null, "loginAcct" + i, "password" + i, "userName" + i, "email" + i, "2021-12-18");
             adminMapper.insert(admin);
         }
+    }
 
+    @Test
+    public void testRoleMapper() {
 
+        for (int i = 0; i < 333; i++) {
+            Role role = new Role(null,"roleName" + i);
+            roleMapper.insert(role);
+        }
     }
 
     @Test

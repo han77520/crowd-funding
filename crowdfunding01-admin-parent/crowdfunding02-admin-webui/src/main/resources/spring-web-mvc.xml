@@ -21,7 +21,8 @@
     <mvc:view-controller path="/admin/login" view-name="admin_login"/>
     <mvc:view-controller path="/admin/to/main" view-name="admin_main"/>
     <mvc:view-controller path="admin/to/add" view-name="admin_add"/>
-    <!--<mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>-->
+    <mvc:view-controller path="role/to/page" view-name="role_page"/>
+
 
     <!--异常映射-->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

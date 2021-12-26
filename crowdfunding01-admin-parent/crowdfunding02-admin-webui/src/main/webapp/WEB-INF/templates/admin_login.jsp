@@ -53,12 +53,6 @@
         </div>
         <input type="submit" class="btn btn-lg btn-success btn-block">
     </form>
-
-    <%--<form action="admin/do/login" method="post">--%>
-    <%--<input type="text" name="loginAcct">--%>
-    <%--<input type="password" name="userPswd">--%>
-    <%--<input type="submit">--%>
-    <%--</form>--%>
 </div>
 </body>
 </html>

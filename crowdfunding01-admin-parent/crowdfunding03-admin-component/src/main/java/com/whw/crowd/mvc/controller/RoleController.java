@@ -22,6 +22,14 @@ public class RoleController {
     private RoleService roleService;
 
     @ResponseBody
+    @RequestMapping("/role/update")
+    public ResultEntity<String> roleUpdate(Role role){
+        roleService.updateRole(role);
+
+        return ResultEntity.successWithoutData();
+    }
+
+    @ResponseBody
     @RequestMapping("/role/save")
     public ResultEntity<String> roleSave(Role role){
         roleService.saveRole(role);

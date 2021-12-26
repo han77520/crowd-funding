@@ -47,10 +47,11 @@
         <url-pattern>/bootstrap/*</url-pattern>
         <url-pattern>/css/*</url-pattern>
         <url-pattern>/fonts/*</url-pattern>
-        <url-pattern>/jquery*</url-pattern>
-        <url-pattern>/layer*</url-pattern>
-        <url-pattern>/script*</url-pattern>
-        <url-pattern>/ztree*</url-pattern>
+        <url-pattern>/jquery/*</url-pattern>
+        <url-pattern>/layer/*</url-pattern>
+        <url-pattern>/script/*</url-pattern>
+        <url-pattern>/ztree/*</url-pattern>
+        <url-pattern>/crowd/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

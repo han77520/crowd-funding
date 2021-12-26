@@ -35,7 +35,7 @@ function fillTableBody(pageInfo) {
     // 清除 tbody 中旧数据
     $("#rolePageBody").empty();
 
-    // 这里清空是为了让没有搜索结果时不显示页码导航条
+    // 没有搜索结果时不显示页码导航条
     $("#Pagination").empty();
 
     // 判断pageInfo对象是否有效

@@ -25,6 +25,55 @@
             // 调用分页函数刷新页面
             generatePage();
         });
+
+        // 点击新增按钮打开模态框
+        $("#showAddModalBtn").click(function () {
+            $("#addModal").modal('show');
+        });
+
+        // 模态框中的保存绑定单机函数
+        $("#saveRoleBtn").click(function () {
+
+            // 获取输入框中的值
+            var inputRoleName = $.trim($("#inputRoleName").val());
+
+
+            $.ajax({
+                "url": "role/save",
+                "type": "post",
+                "data": {
+                    "name": inputRoleName
+                },
+                "dataType": "json",
+                "success": function (response) {
+
+                    var result = response.result;
+
+                    if (result == "SUCCESS") {
+                        layer.msg("添加角色成功！");
+                    }
+
+                    if (result == "FAILED") {
+                        layer.msg("添加角色失败！ 原因为：" + response.message);
+                    }
+
+                    // 重新加载分页
+                    window.pageNum = 999999;
+                    generatePage();
+                },
+                "error": function (response) {
+                    Layer.msg("请求错误，请及时联系运维人员！")
+                }
+            });
+
+            // 关闭模态框
+            $("#addModal").modal('hide');
+
+            // 清理模态框中文本框内容
+            $("#inputRoleName").val("");
+
+
+        })
     })
 
 </script>
@@ -59,8 +108,8 @@
                     <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
                             class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
-                    <button type="button" class="btn btn-primary" style="float:right;"
-                            onclick="window.location.href='form.html'"><i class="glyphicon glyphicon-plus"></i> 新增
+                    <button id="showAddModalBtn" type="button" class="btn btn-primary" style="float:right;"
+                    ><i class="glyphicon glyphicon-plus"></i> 新增
                     </button>
                     <br>
                     <hr style="clear:both;">
@@ -92,10 +141,11 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
+<%@include file="/WEB-INF/templates/modal_role_add.jsp" %>
+>
 </body>
 </html>
 

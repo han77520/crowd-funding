@@ -22,6 +22,14 @@ public class RoleController {
     private RoleService roleService;
 
     @ResponseBody
+    @RequestMapping("/role/save")
+    public ResultEntity<String> roleSave(Role role){
+        roleService.saveRole(role);
+        return ResultEntity.successWithoutData();
+    }
+
+
+    @ResponseBody
     @RequestMapping("/role/get/page")
     public ResultEntity<PageInfo<Role>> getPageInfo(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,

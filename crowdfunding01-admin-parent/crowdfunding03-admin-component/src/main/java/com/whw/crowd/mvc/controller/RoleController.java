@@ -6,9 +6,12 @@ import com.whw.crowd.service.api.RoleService;
 import com.whw.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author 王瀚文
@@ -20,6 +23,14 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    @ResponseBody
+    @RequestMapping("/role/removeById")
+    public ResultEntity<String> roleDelete(@RequestBody List<Integer> roleIds){
+        roleService.deleteRole(roleIds);
+
+        return ResultEntity.successWithoutData();
+    }
 
     @ResponseBody
     @RequestMapping("/role/update")

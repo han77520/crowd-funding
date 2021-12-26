@@ -87,7 +87,7 @@
         * ① 首先找到动态元素附着的那个静态元素
         * ② 使用on(),参数1为事件类型，参数2为绑定事件的选择器，参数3就是事件的响应函数
         */
-        $("#rolePageBody").on("click",".pencilBtn",function () {
+        $("#rolePageBody").on("click", ".pencilBtn", function () {
             // 打开模态框
             $("#editModal").modal('show');
 
@@ -105,14 +105,14 @@
             var updateRoleName = $("#updateRoleName").val();
 
             $.ajax({
-                "url":"role/update",
-                "type":"post",
-                "data":{
-                    "id":roleId,
-                    "name":updateRoleName
+                "url": "role/update",
+                "type": "post",
+                "data": {
+                    "id": roleId,
+                    "name": updateRoleName
                 },
-                "dataType":"json",
-                "success":function (response) {
+                "dataType": "json",
+                "success": function (response) {
                     var result = response.result;
 
                     if (result == "SUCCESS") {
@@ -127,16 +127,113 @@
                     }
 
                 },
-                "error":function (response) {
+                "error": function (response) {
                     layer.msg("请求错误，请及时联系运维人员！")
                 }
-            })
+            });
 
             // 关闭模态框
             $("#editModal").modal('hide');
         });
 
-    })
+        // var roleAarry = [{roleId:1,roleName:"aaa"},{roleId:2,roleName:"bbb"},{roleId:3,roleName:"ccc"},{roleId:4,roleName:"ddd"},
+        //     {roleId:5,roleName:"eee"},{roleId:6,roleName:"fff"},{roleId:7,roleName:"ggg"}];
+        // showConfirmModal(roleAarry);
+
+        // 给模态框中的确认删除按钮绑定单击事件
+        $("#removeRoleBtn").click(function () {
+
+            var requestBody = JSON.stringify(window.roleIdArray);
+
+            $.ajax({
+                "url": "role/removeById",
+                "type": "post",
+                "data": requestBody,
+                "contentType": "application/json;charset=UTF-8",
+                "dataType": "json",
+                "success": function (response) {
+                    var result = response.result;
+
+                    if (result == "SUCCESS") {
+                        layer.msg("删除成功！");
+                    }
+
+                    // 重新加载分页
+                    generatePage();
+
+                    if (result == "FAILED") {
+                        layer.msg("删除失败！ 原因为：" + response.message);
+                    }
+                },
+                "error": function (response) {
+                    layer.msg("请求错误，请及时联系运维人员！")
+                }
+            });
+
+            $("#confirmModal").modal('hide');
+        });
+
+        // 给删除按钮绑定单击事件
+        $("#rolePageBody").on("click", ".removeBtn", function () {
+
+            var roleName = $(this).parent().prev().text();
+
+            // 创建role对象存入数组 roleArray 中
+            var roleArray = [
+                {roleId: this.id, roleName: roleName}
+            ];
+
+            showConfirmModal(roleArray);
+        });
+
+        // 给总的 checkBox 绑定单击事件
+        $("#summaryBox").click(function () {
+
+            // ①获取当前多选框自身的状态
+            var currentStatus = this.checked;
+
+            // ②用当前多选框的状态去设置其他多选框
+            $(".itemBox").prop("checked", currentStatus);
+        });
+
+        // 全选全不选的反向操作
+        $("#rolePageBody").on("click", ".itemBox", function () {
+
+            // 获取当前选中的个数
+            var checkedBoxCount = $(".itemBox:checked").length;
+
+            // 获取全部 .itemBox 的个数
+            var totalBoxCount = $(".itemBox").length;
+
+            $("#summaryBox").prop("checked", checkedBoxCount == totalBoxCount);
+        });
+
+        // 给批量删除的按钮绑定单击事件
+        $("#batchRemoveBtn").click(function () {
+
+            var roleArray = [];
+
+            // 遍历当前选中的 checkBox
+            $(".itemBox:checked").each(function () {
+
+                // 获取 role 的id
+                var roleId = this.id;
+
+                // 获取 role 的name
+                var roleName = $(this).parent().next().text();
+
+                roleArray.push({"roleId":roleId,"roleName":roleName});
+            });
+
+            // 检查roleArray是否为0
+            if (roleArray.length == 0) {
+                layer.msg("请选中之后再删除~~~");
+                return;
+            }
+
+            showConfirmModal(roleArray);
+        });
+    });
 
 </script>
 
@@ -167,7 +264,7 @@
                                 class="glyphicon glyphicon-search"></i> 查询
                         </button>
                     </form>
-                    <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
+                    <button type="button" id="batchRemoveBtn" class="btn btn-danger" style="float:right;margin-left:10px;"><i
                             class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
                     <button id="showAddModalBtn" type="button" class="btn btn-primary" style="float:right;"><i
@@ -180,7 +277,7 @@
                             <thead>
                             <tr>
                                 <th width="30">#</th>
-                                <th width="30"><input type="checkbox"></th>
+                                <th width="30"><input id="summaryBox" type="checkbox"></th>
                                 <th>名称</th>
                                 <th width="100">操作</th>
                             </tr>
@@ -208,6 +305,7 @@
 
 <%@include file="/WEB-INF/templates/modal_role_add.jsp" %>
 <%@include file="/WEB-INF/templates/modal_role_edit.jsp" %>
+<%@include file="/WEB-INF/templates/modal_role_confirm.jsp" %>
 </body>
 </html>
 

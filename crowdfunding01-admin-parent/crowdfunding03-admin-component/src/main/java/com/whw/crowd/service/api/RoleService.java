@@ -3,6 +3,8 @@ package com.whw.crowd.service.api;
 import com.github.pagehelper.PageInfo;
 import com.whw.crowd.entity.Role;
 
+import java.util.List;
+
 /**
  * @author 王瀚文
  * @Description:
@@ -15,4 +17,6 @@ public interface RoleService {
     void saveRole(Role role);
 
     void updateRole(Role role);
+
+    void deleteRole(List<Integer> roleIds);
 }

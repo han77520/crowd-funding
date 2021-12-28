@@ -20,8 +20,9 @@
     <!--这种配置请求的方式如果出现了异常，得用xml文件的方式来处理异常，不能使用注解的方式-->
     <mvc:view-controller path="/admin/login" view-name="admin_login"/>
     <mvc:view-controller path="/admin/to/main" view-name="admin_main"/>
-    <mvc:view-controller path="admin/to/add" view-name="admin_add"/>
-    <mvc:view-controller path="role/to/page" view-name="role_page"/>
+    <mvc:view-controller path="/admin/to/add" view-name="admin_add"/>
+    <mvc:view-controller path="/role/to/page" view-name="role_page"/>
+    <mvc:view-controller path="/menu/to/page" view-name="menu_page"/>
 
 
     <!--异常映射-->

@@ -86,12 +86,22 @@
     from t_role
     where id = #{id,jdbcType=INTEGER}
   </select>
-
   <select id="SelectRoleByKeyword" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from t_role
     where name like concat("%",#{keyword},"%")
+  </select>
+
+  <select id="selectAssignedRole" resultMap="BaseResultMap">
+    select role.id,role.name from t_role role
+    right join inner_admin_role iar
+    on role.id = iar.role_id
+    where iar.admin_id = #{id}
+  </select>
+
+  <select id="selectUnAssignedRole" resultMap="BaseResultMap">
+    select id,`name` from t_role where id NOT IN (select role_id from inner_admin_role where admin_id = #{id})
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

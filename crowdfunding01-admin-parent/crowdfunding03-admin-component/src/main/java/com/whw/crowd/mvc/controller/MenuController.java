@@ -6,7 +6,9 @@ import com.whw.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,16 +20,43 @@ import java.util.Objects;
  * @Description:
  * @date 2021-12-27 8:22
  */
-@Controller
+@RestController
 public class MenuController {
 
     @Autowired
     private MenuService menuService;
 
+    // 删除Menu对象
+    @RequestMapping("/menu/remove")
+    public ResultEntity<String> removeMenu(@RequestParam("id") Integer id) {
+
+        menuService.removeMenu(id);
+
+        return ResultEntity.successWithoutData();
+    }
+
+    // 更新Menu对象
+    @RequestMapping("/menu/edit")
+    public ResultEntity<String> editMenu(Menu menu) {
+
+        menuService.updateMenu(menu);
+
+        return ResultEntity.successWithoutData();
+    }
+
+    // 保存Menu对象
+    @RequestMapping("/menu/save")
+    public ResultEntity<String> saveMenu(Menu menu) {
+
+        menuService.saveMenu(menu);
+
+        return ResultEntity.successWithoutData();
+    }
+
+
     // 此方法的时间复杂度为 n
-    @ResponseBody
     @RequestMapping("/menu/get/whole/tree")
-    public ResultEntity<Menu> getWholeTreeNew(){
+    public ResultEntity<Menu> getWholeTreeNew() {
 
         // 查询全部的Menu对象
         List<Menu> menuList = menuService.getAll();
@@ -36,11 +65,11 @@ public class MenuController {
         Menu root = null;
 
         // 创建map对象，用于存储所有节点，方便后面通过Pid来直接获取父节点
-        Map<Integer,Menu> menuMap = new HashMap<>();
+        Map<Integer, Menu> menuMap = new HashMap<>();
 
         // 往Mpa中添加元素，此次添加的Menu对象代表的是父节点
         for (Menu menu : menuList) {
-            menuMap.put(menu.getId(),menu);
+            menuMap.put(menu.getId(), menu);
         }
 
         // 此次遍历 menuList中的Menu对象代表的是子节点

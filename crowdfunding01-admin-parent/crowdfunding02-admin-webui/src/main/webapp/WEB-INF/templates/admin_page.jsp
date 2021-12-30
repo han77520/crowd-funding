@@ -113,10 +113,12 @@
                                         <td>${admin.userName}</td>
                                         <td>${admin.email}</td>
                                         <td>
-                                            <button type="button" class="btn btn-success btn-xs"><i
-                                                    class=" glyphicon glyphicon-check"></i></button>
                                             <c:if test="${empty param.keyword}">
-                                                <a href="admin/to/edit/${admin.id}/${param.pageNum}" class="btn btn-primary btn-xs">
+                                                <a href="assign/to/assign/role/${admin.id}/${param.pageNum}"
+                                                   class="btn btn-success btn-xs"><i
+                                                        class=" glyphicon glyphicon-check"></i></a>
+                                                <a href="admin/to/edit/${admin.id}/${param.pageNum}"
+                                                   class="btn btn-primary btn-xs">
                                                     <i class=" glyphicon glyphicon-pencil"></i>
                                                 </a>
                                                 <a href="admin/remove/${admin.id}/${param.pageNum}"
@@ -125,6 +127,9 @@
                                                 </a>
                                             </c:if>
                                             <c:if test="${!empty param.keyword}">
+                                                <a href="assign/to/assign/role/${admin.id}/${param.pageNum}/${param.keyword}"
+                                                   class="btn btn-success btn-xs"><i
+                                                        class=" glyphicon glyphicon-check"></i></a>
                                                 <a href="admin/to/edit/${admin.id}/${param.pageNum}/${param.keyword}"
                                                    class="btn btn-primary btn-xs">
                                                     <i class=" glyphicon glyphicon-pencil"></i>

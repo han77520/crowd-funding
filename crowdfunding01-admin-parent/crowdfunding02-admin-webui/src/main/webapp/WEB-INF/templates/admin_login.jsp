@@ -51,7 +51,7 @@
                    style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
-        <input type="submit" class="btn btn-lg btn-success btn-block">
+        <button type="submit" class="btn btn-lg btn-success btn-block">登录</button>
     </form>
 </div>
 </body>

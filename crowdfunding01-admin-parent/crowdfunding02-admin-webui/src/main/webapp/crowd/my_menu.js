@@ -1,3 +1,40 @@
+// 生成树形结构
+function generateTree(){
+    // 发送Ajax请求生成数据结构的JSON数据
+    $.ajax({
+        "url": "menu/get/whole/tree",
+        "type": "post",
+        "dataType": "json",
+        "success": function (response) {
+            var result = response.result;
+            if (result == "SUCCESS") {
+                // 创建JSON对象用于存储对zTree所做的设置
+                var setting = {
+                    "view": {
+                        "addDiyDom":myAddDiyDom,
+                        "addHoverDom":myAddHoverDom,
+                        "removeHoverDom":myRemoveHoverDom
+                    },
+                    "data":{
+                        "key":{
+                            "url":"loveLL"
+                        }
+                    }
+                };
+
+                var zNodes = response.data;
+
+                // 初始化数据结构
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            }
+
+            if (result == "FAILED") {
+                layer.msg("请求失败，请及时联系运维人员~~");
+            }
+        }
+    });
+}
+
 //在鼠标离开节点范围时删除按钮组
 function myRemoveHoverDom(treeId, treeNode) {
     var btnGroupId = treeNode.tId + "_btnGrp";
@@ -20,9 +57,9 @@ function myAddHoverDom(treeId, treeNode) {
     }
 
     // 准备各个按钮的HTML标签
-    var addBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title='添加子节点'>&nbsp;&nbsp;<i class='fa fa-fw fa-plus rbg '></i></a>";
-    var removeBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title=' 删 除 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-times rbg '></i></a>";
-    var editBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title=' 修 改 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-edit rbg '></i></a>";
+    var addBtn = "<a id='" + treeNode.id + "' class='addBtn btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;'  title='添加子节点'>&nbsp;&nbsp;<i class='fa fa-fw fa-plus rbg '></i></a>";
+    var removeBtn = "<a id='" + treeNode.id + "' class='removeBtn btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;'  title=' 删 除 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-times rbg '></i></a>";
+    var editBtn = "<a id='" + treeNode.id + "' class='editBtn btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;'  title=' 修 改 节 点 '>&nbsp;&nbsp;<i class='fa fa-fw fa-edit rbg '></i></a>";
 
     // 获取当前节点的级别
     var level = treeNode.level;

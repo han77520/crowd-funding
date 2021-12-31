@@ -23,4 +23,6 @@ public interface RoleService {
     List<Role> getAssignedRole(Integer id);
 
     List<Role> getUnAssignedRole(Integer id);
+
+    void saveAdminRoleRelationship(Integer adminId, List<Integer> roleList);
 }

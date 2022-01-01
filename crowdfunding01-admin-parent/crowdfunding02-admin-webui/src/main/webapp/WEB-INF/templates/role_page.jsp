@@ -4,9 +4,12 @@
 
 <%@include file="../include/include_head.jsp" %>
 <link rel="stylesheet" href="css/pagination.css">
+<link rel="stylesheet" href="ztree/zTreeStyle.css"/>
+<script type="text/javascript" src="ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="jquery/jquery.pagination.js"></script>
 <script type="text/javascript" src="crowd/my_role.js"></script>
 <script type="text/javascript">
+
 
     $(function () {
         // 1.为分页操作准备初始化数据
@@ -233,6 +236,19 @@
 
             showConfirmModal(roleArray);
         });
+
+        $("#rolePageBody").on("click", ".checkBtn", function () {
+
+            window.roleId = this.id;
+
+            // 打开模态框
+            $("#assignModal").modal("show");
+
+            // 在模态框中装载数Auth的树形结构数据
+            fillAuthTree();
+
+            return false;
+        });
     });
 
 </script>
@@ -306,6 +322,7 @@
 <%@include file="/WEB-INF/templates/modal_role_add.jsp" %>
 <%@include file="/WEB-INF/templates/modal_role_edit.jsp" %>
 <%@include file="/WEB-INF/templates/modal_role_confirm.jsp" %>
+<%@include file="/WEB-INF/templates/modal_role_assign_auth.jsp" %>
 </body>
 </html>
 

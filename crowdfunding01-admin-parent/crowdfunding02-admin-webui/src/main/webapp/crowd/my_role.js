@@ -1,3 +1,133 @@
+// 声明专门的函数用来分配Auth的模态框中显示Auth的树形结构数据
+function fillAuthTree() {
+
+    // 发送Ajax请求查询Auth数据
+    var ajaxReturn = $.ajax({
+        "url": "assign/get/all/auth",
+        "type": "post",
+        "dataType": "json",
+        "async": false
+    });
+
+    console.log(ajaxReturn);
+
+    if (ajaxReturn.status != 200) {
+        layer.msg("出错了，请联系运维人员！");
+        return;
+    }
+
+    // 交给zTree去组装
+    var authList = ajaxReturn.responseJSON.data;
+
+    var setting = {
+        "check": {
+            "chkStyle": "checkbox",
+            "enable": true
+        },
+        "data": {
+            "simpleData": {
+                "enable": true,
+                "pIdKey": "categoryId"
+            },
+            "key": {
+                "name": "title"
+            }
+        }
+    };
+
+    // 生成树形结构
+    $.fn.zTree.init($("#authTreeDemo"), setting, authList);
+
+    // 让结点默认展开
+    var zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+    zTreeObj.expandAll(true);
+
+    // 查询已分配的Auth的id组成的数组
+    ajaxReturn = $.ajax({
+        "url": "assign/get/assigned/authId",
+        "type": "post",
+        "data": {
+            "roleId": window.roleId
+        },
+        "dataType": "json",
+        "async": false
+    });
+
+    if (ajaxReturn.status != 200) {
+        layer.msg("出错了，请联系运维人员！");
+        return;
+    }
+
+    // 获取 authIdArray
+    var authIdArray = ajaxReturn.responseJSON.data;
+
+    // 根据authIdArray把树形结构中对应的结点勾上
+    for (var i = 0; i < authIdArray.length; i++) {
+        var authId = authIdArray[i];
+
+        var treeNode = zTreeObj.getNodeByParam("id", authId);
+
+        //参数2：true表示勾选结点
+        //参数3：false表示取消联动(也就是全选全不选功能)
+        zTreeObj.checkNode(treeNode, true, false);
+    }
+
+    // 给分配按钮绑定单击事件
+    $("#assignBtn").click(function () {
+        // 收集树形结构的各个节点中被勾选的节点
+        // 声明一个存放id的数组
+        var authIdArray = [];
+
+        // 获取zTreeObj对象
+        var zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+
+        // 获取被勾选的节点
+        var checkedNodes = zTreeObj.getCheckedNodes();
+
+        for (var i = 0; i < checkedNodes.length; i++) {
+            var checkedNode = checkedNodes[i];
+
+            var authId = checkedNode.id;
+
+            authIdArray.push(authId);
+        }
+
+        var requestBody = JSON.stringify({
+            "authIdArray": authIdArray,
+            "roleId":[window.roleId]
+        });
+
+        authIdArray = JSON.stringify(authIdArray);
+        var roleId = JSON.stringify(window.roleId);
+
+        // 发送Ajax请求保存修改后的值
+        $.ajax({
+            "url": "auth/update",
+            "type": "post",
+            "data":requestBody,
+            "contentType":"application/json;charset=UTF-8",
+            "dateType": "json",
+            "success": function (response) {
+                var result = response.result;
+
+                if (result == "SUCCESS") {
+                    layer.msg("配置成功！");
+                }
+
+                if (result == "FAILED") {
+                    layer.msg("出错了！ 原因为：" + response.message);
+                }
+            },
+            "error": function (response) {
+                console.log(response);
+                layer.msg("出错了！请及时联系运维人员");
+            }
+        })
+
+        $("#assignModal").modal("hide");
+    });
+}
+
 // 显示确认模态框
 function showConfirmModal(roleArray) {
 

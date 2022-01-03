@@ -102,8 +102,8 @@
     </delete>
 
     <delete id="deleteAuthIdByRoleId">
-    delete from inner_role_auth where role_id = #{roleId}
-  </delete>
+        delete from inner_role_auth where role_id = #{roleId}
+    </delete>
     <insert id="insertAuthIdByRoleId">
         insert into inner_role_auth(role_id,auth_id) values
         <foreach collection="authIdArray" item="authId" separator=",">
@@ -153,6 +153,15 @@
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
+    </select>
+
+    <select id="getAssignedAuthNameByAdminId" resultType="string">
+        SELECT distinct a.name FROM inner_admin_role iar
+        LEFT JOIN `inner_role_auth` ira
+        ON iar.`role_id` = ira.`role_id`
+        LEFT JOIN `t_auth` a
+        ON ira.`auth_id` = a.`id`
+        WHERE iar.`admin_id` = #{adminId} AND a.`name` != '' AND a.`name` IS NOT NULL
     </select>
 
     <select id="selectAssignedAuthId" resultType="java.lang.Integer">

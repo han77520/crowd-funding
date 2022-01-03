@@ -34,4 +34,6 @@ public interface AuthMapper {
     void insertAuthIdByRoleId(@Param("roleId") Integer roleId ,@Param("authIdArray")List<Integer> authIdArray);
 
     void deleteAuthIdByRoleId(Integer roleId);
+
+    List<String> getAssignedAuthNameByAdminId(Integer adminId);
 }

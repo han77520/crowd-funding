@@ -5,6 +5,7 @@ import com.whw.crowd.entity.Role;
 import com.whw.crowd.service.api.RoleService;
 import com.whw.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,8 @@ public class RoleController {
     }
 
 
+
+    @PreAuthorize("hasRole('部长')")
     @ResponseBody
     @RequestMapping("/role/get/page")
     public ResultEntity<PageInfo<Role>> getPageInfo(

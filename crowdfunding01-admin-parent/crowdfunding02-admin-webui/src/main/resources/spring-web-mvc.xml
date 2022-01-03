@@ -40,22 +40,22 @@
 
     <mvc:annotation-driven/>
 
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <!--
-                <mvc:mapping path=""/>配置要拦截的资源
-                /* 对应一层路径，比如 /aaa
-                /** 对应多次路径 比如 /a/b/c
-             -->
-            <mvc:mapping path="/**"/>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--&lt;!&ndash;-->
+                <!--<mvc:mapping path=""/>配置要拦截的资源-->
+                <!--/* 对应一层路径，比如 /aaa-->
+                <!--/** 对应多次路径 比如 /a/b/c-->
+             <!--&ndash;&gt;-->
+            <!--<mvc:mapping path="/**"/>-->
 
-            <!--  <mvc:exclude-mapping path=""/>表示不要拦截的资源 -->
-            <!--<mvc:exclude-mapping path="/**/admin/login"/>-->
-            <!--<mvc:exclude-mapping path="/**/admin/to/login"/>-->
-            <!--<mvc:exclude-mapping path="/**/admin/do/logout"/>-->
-            <bean class="com.whw.crowd.mvc.interceptor.LoginInterceptor"/>
-        </mvc:interceptor>
+            <!--&lt;!&ndash;  <mvc:exclude-mapping path=""/>表示不要拦截的资源 &ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/**/admin/login"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/**/admin/to/login"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/**/admin/do/logout"/>&ndash;&gt;-->
+            <!--<bean class="com.whw.crowd.mvc.interceptor.LoginInterceptor"/>-->
+        <!--</mvc:interceptor>-->
 
-    </mvc:interceptors>
+    <!--</mvc:interceptors>-->
 
 </beans>

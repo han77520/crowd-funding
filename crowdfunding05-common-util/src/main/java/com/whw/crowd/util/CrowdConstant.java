@@ -21,4 +21,5 @@ public class CrowdConstant {
 
     public static final String ATTR_NAME_PAGE_INFO = "pageInfo";
     public static final String ATTER_NAME_EDIT_ADMIN= "editAdmin";
+    public static final String MESSAGE_ACCESS_DENIED = "抱歉！ 您无权限";
 }

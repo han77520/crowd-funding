@@ -15,4 +15,6 @@ public interface AuthService {
     List<Integer> getAssignedAuthId(Integer roleId);
 
     void updateAuth(Integer roleId ,List<Integer> authIdArray);
+
+    List<String> getAssignedAuthNameByAdminId(Integer adminId);
 }

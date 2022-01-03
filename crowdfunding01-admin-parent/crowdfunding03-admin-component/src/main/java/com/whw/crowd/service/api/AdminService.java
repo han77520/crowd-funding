@@ -26,4 +26,6 @@ public interface AdminService {
     Admin selectById(Integer adminId);
 
     void updatAdmin(Admin admin);
+
+    Admin getAdminByLoginAcct(String username);
 }

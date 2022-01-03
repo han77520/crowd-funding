@@ -19,6 +19,16 @@ public class Auth {
         this.categoryId = categoryId;
     }
 
+    @Override
+    public String toString() {
+        return "Auth{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", categoryId=" + categoryId +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }

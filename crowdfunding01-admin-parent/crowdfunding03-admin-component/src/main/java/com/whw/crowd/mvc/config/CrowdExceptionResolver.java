@@ -41,15 +41,6 @@ public class CrowdExceptionResolver {
         return modelAndView;
     }
 
-    @ExceptionHandler(value = {ArithmeticException.class})
-    public ModelAndView resolveMathException(ArithmeticException exception,
-                                                    HttpServletRequest request,
-                                                    HttpServletResponse response) throws IOException {
-        ModelAndView modelAndView = commonResolver("system-errors", exception, request, response);
-
-        return modelAndView;
-    }
-
     @ExceptionHandler(value = LoginAcctAleadyInUseException.class)
     public ModelAndView resolveLoginAcctAleadyInUseException(LoginAcctAleadyInUseException exception,
                                                 HttpServletRequest request,
@@ -76,6 +67,16 @@ public class CrowdExceptionResolver {
 
         return modelAndView;
     }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ModelAndView resolveException(Exception exception,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response) throws IOException {
+        ModelAndView modelAndView = commonResolver("admin_login", exception, request, response);
+
+        return modelAndView;
+    }
+
 
     /**
      * 抽取处理异常的公共部分

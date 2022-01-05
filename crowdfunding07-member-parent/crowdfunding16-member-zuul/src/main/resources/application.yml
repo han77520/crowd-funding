@@ -1,0 +1,19 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: whw-crowd-zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+
+zuul:
+  ignored-services: "*"
+  sensitive-headers: "*"
+  routes:
+    crowd-portal:
+      service-id: whw-crowd-auth
+      path: /** #这里一定要写两个*号，表示多层目录

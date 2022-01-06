@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author Han77
  * @Description:
@@ -30,7 +32,13 @@ public class MemberServiceImpl implements MemberService {
 
         criteria.andLoginacctEqualTo(loginAcct);
 
-        return memberPOMapper.selectByExample(example).get(0);
+        List<MemberPO> memberPOS = memberPOMapper.selectByExample(example);
+
+        if (null == memberPOS || memberPOS.size() == 0) {
+            return null;
+        }
+
+        return memberPOS.get(0);
     }
 
     @Override

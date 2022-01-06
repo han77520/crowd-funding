@@ -11,3 +11,13 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1000/eureka
+
+short:
+  message:
+    host: https://dfsns.market.alicloudapi.com
+    method: POST
+    appCode: 282cbdd31b764634a64dd761794d9fb6
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000

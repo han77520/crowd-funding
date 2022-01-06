@@ -6,6 +6,7 @@ import com.whw.crowd.mapper.MemberPOMapper;
 import com.whw.crowd.service.api.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -30,5 +31,11 @@ public class MemberServiceImpl implements MemberService {
         criteria.andLoginacctEqualTo(loginAcct);
 
         return memberPOMapper.selectByExample(example).get(0);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+    public void saveMember(MemberPO memberPO) {
+        memberPOMapper.insertSelective(memberPO);
     }
 }

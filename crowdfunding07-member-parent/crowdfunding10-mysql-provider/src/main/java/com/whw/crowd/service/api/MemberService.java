@@ -10,4 +10,6 @@ import com.whw.crowd.entity.po.MemberPO;
 public interface MemberService {
 
     MemberPO getMemberPOByLoginacct(String loginAcct);
+
+    void saveMember(MemberPO memberPO);
 }

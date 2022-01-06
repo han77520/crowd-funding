@@ -22,6 +22,6 @@ public class RedisTest {
     @Test
     public void testSet() {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.set("apple1", "red");
+        operations.set("app", "red");
     }
 }

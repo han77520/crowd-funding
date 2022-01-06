@@ -26,7 +26,7 @@ public class RedisController {
     private Logger logger = LoggerFactory.getLogger(RedisController.class);
 
     @RequestMapping("set/redis/key/value/remote")
-    ResultEntity<String> setRedisKeyValueRemote(
+    public ResultEntity<String> setRedisKeyValueRemote(
             @RequestParam("key") String key,
             @RequestParam("value") String value
     ) {
@@ -44,7 +44,7 @@ public class RedisController {
 
 
     @RequestMapping("set/redis/key/value/remote/with/timeout")
-    ResultEntity<String> setRedisKeyValueRemoteWithTimeout(
+    public ResultEntity<String> setRedisKeyValueRemoteWithTimeout(
             @RequestParam("key") String key,
             @RequestParam("value") String value,
             @RequestParam("timeout") long timeout,
@@ -64,7 +64,7 @@ public class RedisController {
 
 
     @RequestMapping("get/redis/string/value/by/key")
-    ResultEntity<String> getRedisStringValueByKey(
+    public ResultEntity<String> getRedisStringValueByKey(
             @RequestParam("key") String key
     ) {
         try {
@@ -80,7 +80,7 @@ public class RedisController {
     }
 
     @RequestMapping("remove/redis/string/value/by/key")
-    ResultEntity<String> removeRedisStringValueByKey(
+    public ResultEntity<String> removeRedisStringValueByKey(
             @RequestParam("key") String key
     ) {
         try {

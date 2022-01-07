@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: whw-crowd-zuul
+  redis:
+    host: 192.168.130.172
+  session:
+    store-type: redis
 
 eureka:
   client:
@@ -13,6 +17,7 @@ eureka:
 zuul:
   ignored-services: "*"
   sensitive-headers: "*"
+  add-host-header: true
   routes:
     crowd-portal:
       service-id: whw-crowd-auth

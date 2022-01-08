@@ -48,18 +48,19 @@ public class ProjectController {
             throw new RuntimeException(CrowdConstant.MESSAGE_TEMPLE_PROJECT_MISSING);
         }
 
-        projectVO.setMemberConfirmInfoVo(memberConfirmInfoVO);
+        projectVO.setMemberConfirmInfoVO(memberConfirmInfoVO);
 
         MemberLoginVO memberLoginVO = (MemberLoginVO) session.getAttribute(CrowdConstant.ATTER_NAME_LOGIN_MEMBER);
 
-        session.removeAttribute(CrowdConstant.ATTR_NAME_TEMPLE_PROJECT);
 
         ResultEntity<String> saveProjectVORemote = mySQLRemoteService.saveProjectVORemote(projectVO, memberLoginVO.getId());
 
         if (ResultEntity.FAILED.equals(saveProjectVORemote.getResult())) {
-            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE,saveProjectVORemote.getMessage());
+            modelMap.addAttribute(CrowdConstant.ATTR_NAME_MESSAGE, saveProjectVORemote.getMessage());
             return "project_confirm";
         }
+
+        session.removeAttribute(CrowdConstant.ATTR_NAME_TEMPLE_PROJECT);
 
         return "redirect:http://www.crowd.com/project/create/success";
     }
@@ -70,27 +71,37 @@ public class ProjectController {
     public ResultEntity<String> saveReturn(ReturnVO returnVO, HttpSession session) {
 
         try {
+            // 1.从session域中读取之前缓存的ProjectVO对象
             ProjectVO projectVO = (ProjectVO) session.getAttribute(CrowdConstant.ATTR_NAME_TEMPLE_PROJECT);
 
-            if (null == projectVO) {
-                return ResultEntity.failed((CrowdConstant.MESSAGE_TEMPLE_PROJECT_MISSING));
+            // 2.判断projectVO是否为null
+            if(projectVO == null) {
+                return ResultEntity.failed(CrowdConstant.MESSAGE_TEMPLE_PROJECT_MISSING);
             }
 
+            // 3.从projectVO对象中获取存储回报信息的集合
             List<ReturnVO> returnVOList = projectVO.getReturnVOList();
 
-            // 以后如果不是自己new的对象就留个心眼判空一下，还要记得set进去
-            if (null == returnVOList || returnVOList.size() == 0) {
+            // 4.判断returnVOList集合是否有效
+            if(returnVOList == null || returnVOList.size() == 0) {
+
+                // 5.创建集合对象对returnVOList进行初始化
                 returnVOList = new ArrayList<>();
-                projectVO.setReturnVOList(returnVOList);// *****重要
+                // 6.为了让以后能够正常使用这个集合，设置到projectVO对象中
+                projectVO.setReturnVOList(returnVOList);
             }
 
+            // 7.将收集了表单数据的returnVO对象存入集合
             returnVOList.add(returnVO);
 
-            session.setAttribute(CrowdConstant.MESSAGE_TEMPLE_PROJECT_MISSING, projectVO);
+            // 8.把数据有变化的ProjectVO对象重新存入Session域，以确保新的数据最终能够存入Redis
+            session.setAttribute(CrowdConstant.ATTR_NAME_TEMPLE_PROJECT, projectVO);
 
+            // 9.所有操作成功完成返回成功
             return ResultEntity.successWithoutData();
         } catch (Exception e) {
             e.printStackTrace();
+
             return ResultEntity.failed(e.getMessage());
         }
     }

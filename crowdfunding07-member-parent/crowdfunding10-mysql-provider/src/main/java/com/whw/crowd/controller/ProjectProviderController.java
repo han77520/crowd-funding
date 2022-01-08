@@ -26,13 +26,11 @@ public class ProjectProviderController {
         try {
             projectService.saveProject(projectVO,memberId);
 
-            ResultEntity.successWithoutData();
+            return ResultEntity.successWithoutData();
         } catch (Exception e) {
             e.printStackTrace();
-            ResultEntity.failed(e.getMessage());
+            return ResultEntity.failed(e.getMessage());
         }
-
-        return null;
     }
 
 

@@ -15,6 +15,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1000/eureka
+
 aliyun:
   oss:
     access-key-id: LTAI5tQa7eQC5BRkgFW3H1WF

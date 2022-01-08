@@ -97,13 +97,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
   <insert id="insert" parameterType="com.whw.crowd.entity.po.ProjectItemPicPO" >
     insert into t_project_item_pic (id, projectid, item_pic_path
       )
     values (#{id,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, #{itemPicPath,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.whw.crowd.entity.po.ProjectItemPicPO" >
+
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.whw.crowd.entity.po.ProjectItemPicPO" >
     insert into t_project_item_pic
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -128,6 +130,14 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="insertPathList">
+    insert into t_project_item_pic(projectid,item_pic_path) values
+    <foreach collection="detailPicturePathList" item="path" separator=",">
+      (#{projectId},#{path})
+    </foreach>
+  </insert>
+
   <select id="countByExample" parameterType="com.whw.crowd.entity.po.ProjectItemPicPOExample" resultType="java.lang.Integer" >
     select count(*) from t_project_item_pic
     <if test="_parameter != null" >

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Description:
  * @date 2022-01-05 8:35
  */
-@Service
 @FeignClient("whw-crowd-mysql")
 public interface MySQLRemoteService {
 

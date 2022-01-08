@@ -19,6 +19,7 @@ public class CrowdConstant {
     public static final String MESSAGE_CODE_INVALID = "验证码错误！";
     public static final String MESSAGE_ACCESS_DENIED = "抱歉！ 您无权限";
     public static final String MESSAGE_DETAIL_PIC_UPLOAD_FAILED = "详情图上传失败，请重新上传！";
+    public static final String MESSAGE_TEMPLE_PROJECT_MISSING = "临时存储的Project丢失";
 
     public static final String DELETE_ERROR = "不能删除当前登录用户，防止下次不能登录！";
 

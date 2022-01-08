@@ -1,8 +1,12 @@
 package com.whw.crowd.controller;
 
+import com.whw.crowd.entity.vo.ProjectVO;
 import com.whw.crowd.service.api.ProjectService;
+import com.whw.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,7 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProjectProviderController {
 
     @Autowired
-    private ProjectService projectProviderService;
+    private ProjectService projectService;
+
+    @RequestMapping("/save/projectVO/remote")
+    ResultEntity<String> saveProjectVORemote(@RequestBody ProjectVO projectVO, @RequestParam("memberId")Integer memberId){
+
+        try {
+            projectService.saveProject(projectVO,memberId);
+
+            ResultEntity.successWithoutData();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResultEntity.failed(e.getMessage());
+        }
+
+        return null;
+    }
 
 
 }

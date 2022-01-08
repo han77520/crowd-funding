@@ -17,5 +17,7 @@ public class CrowdWebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/agree/protocol/page").setViewName("project_agree");
         registry.addViewController("/launch/project/page").setViewName("project-launch");
         registry.addViewController("/return/info/page").setViewName("project-return");
+        registry.addViewController("/create/confirm/page").setViewName("project_confirm");
+        registry.addViewController("/create/success").setViewName("project_success");
     }
 }

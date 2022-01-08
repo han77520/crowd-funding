@@ -39,6 +39,12 @@ public class MemberController {
     @Autowired
     private MySQLRemoteService mySQLRemoteService;
 
+
+    @RequestMapping("/member/my/crowd")
+    public String memberMyCrowd(){
+        return "member_crowd";
+    }
+
     @RequestMapping("/auth/member/logout")
     public String logout(HttpSession httpSession){
         httpSession.invalidate();
@@ -78,7 +84,7 @@ public class MemberController {
         System.out.println(memberLoginVO);
         session.setAttribute(CrowdConstant.ATTER_NAME_LOGIN_MEMBER,memberLoginVO);
 
-        return "member_center";
+        return "redirect:/auth/member/to/center/page";
     }
 
 

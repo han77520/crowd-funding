@@ -46,7 +46,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!-- OSS 客户端 SDK -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.5.0</version>
+        </dependency>
 
     </dependencies>
-    
+
 </project>

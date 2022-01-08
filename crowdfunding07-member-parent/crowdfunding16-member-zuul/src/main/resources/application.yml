@@ -22,3 +22,6 @@ zuul:
     crowd-portal:
       service-id: whw-crowd-auth
       path: /** #这里一定要写两个*号，表示多层目录
+    crowd-project:
+      service-id: whw-crowd-project
+      path: /project/**

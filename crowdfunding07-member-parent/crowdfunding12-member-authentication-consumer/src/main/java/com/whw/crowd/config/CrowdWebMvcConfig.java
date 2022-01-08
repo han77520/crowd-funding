@@ -16,5 +16,6 @@ public class CrowdWebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/auth/member/to/registry/page").setViewName("member_reg");
         registry.addViewController("/auth/member/to/login/page").setViewName("member_login");
+        registry.addViewController("/auth/member/to/center/page").setViewName("member_center");
     }
 }

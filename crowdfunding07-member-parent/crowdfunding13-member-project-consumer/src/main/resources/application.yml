@@ -1,0 +1,24 @@
+server:
+  port: 5000
+spring:
+  application:
+    name: whw-crowd-project
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.130.172
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+aliyun:
+  oss:
+    access-key-id: LTAI5tQa7eQC5BRkgFW3H1WF
+    access-key-secret: UpqIbLxihIpzJ85qR2v2FYQYxBqEH3
+    bucket-domain:  http://crowd-funding-han77.oss-cn-beijing.aliyuncs.com
+    bucket-name: crowd-funding-han77
+    end-point: http://oss-cn-beijing.aliyuncs.com

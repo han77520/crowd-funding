@@ -21,6 +21,7 @@ public class AccessPassResources {
         PASS_RES_SET.add("/auth/member/logout");
         PASS_RES_SET.add("/auth/member/do/login");
         PASS_RES_SET.add("/auth/do/member/register");
+//        PASS_RES_SET.add("/member/my/crowd");
         PASS_RES_SET.add("/auth/member/send/short/message");
     }
 

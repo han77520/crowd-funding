@@ -1,10 +1,7 @@
 package com.whw.crowd.service.impl;
 
 import com.whw.crowd.entity.po.*;
-import com.whw.crowd.entity.vo.MemberConfirmInfoVO;
-import com.whw.crowd.entity.vo.MemberLauchInfoVO;
-import com.whw.crowd.entity.vo.ProjectVO;
-import com.whw.crowd.entity.vo.ReturnVO;
+import com.whw.crowd.entity.vo.*;
 import com.whw.crowd.mapper.*;
 import com.whw.crowd.service.api.ProjectService;
 import org.springframework.beans.BeanUtils;
@@ -13,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +40,57 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private ProjectItemPicPOMapper projectItemPicPOMapper;
+
+    @Override
+    public DetailProjectVO getDetailProjectVO(Integer projectId) {
+
+        DetailProjectVO detailProjectVO = projectPOMapper.selectDetailProjectVO(projectId);
+
+        Integer status = detailProjectVO.getStatus();
+
+        switch (status) {
+            case 0:
+                detailProjectVO.setStatusText("审核中");
+                break;
+            case 1:
+                detailProjectVO.setStatusText("众筹中");
+                break;
+            case 2:
+                detailProjectVO.setStatusText("众筹成功");
+                break;
+            case 3:
+                detailProjectVO.setStatusText("已关闭");
+                break;
+            default:
+                break;
+        }
+
+        String deployDate = detailProjectVO.getDeployDate();
+
+        Date currentDay = new Date();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date deployDay = simpleDateFormat.parse(deployDate);
+
+            long currentTimeStamp = currentDay.getTime();
+
+            long deployTimeStamp = deployDay.getTime();
+
+            long pastDays = (currentTimeStamp - deployTimeStamp) /1000 /60 /60 /24;
+
+            Integer totalDays = detailProjectVO.getDay();
+
+            Integer lastDay = (int) (totalDays - pastDays);
+
+            detailProjectVO.setLastDay(lastDay);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return detailProjectVO;
+    }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     @Override
@@ -82,7 +132,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         // 四、保存项目中详情图片路径信息
         List<String> detailPicturePathList = projectVO.getDetailPicturePathList();
-        projectItemPicPOMapper.insertPathList(detailPicturePathList,projectId);
+        projectItemPicPOMapper.insertPathList(detailPicturePathList, projectId);
 
         // 五、保存项目发起人信息
         MemberLauchInfoVO memberLauchInfoVO = projectVO.getMemberLauchInfoVO();
@@ -114,6 +164,11 @@ public class ProjectServiceImpl implements ProjectService {
         BeanUtils.copyProperties(memberConfirmInfoVO, memberConfirmInfoPO);
         memberConfirmInfoPO.setMemberid(memberId);
         memberConfirmInfoPOMapper.insert(memberConfirmInfoPO);
+    }
+
+    @Override
+    public List<PortalTypeVO> getPortalTypeVO() {
+        return projectPOMapper.selectPortalTypeVOList();
     }
 
 }

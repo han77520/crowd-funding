@@ -2,6 +2,8 @@ package com.whw.crowd.mapper;
 
 import com.whw.crowd.entity.po.ProjectPO;
 import com.whw.crowd.entity.po.ProjectPOExample;
+import com.whw.crowd.entity.vo.DetailProjectVO;
+import com.whw.crowd.entity.vo.PortalTypeVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,4 +36,8 @@ public interface ProjectPOMapper {
     void insertTypeRelationShip(@Param("typeIdList") List<Integer> typeIdList, @Param("projectId") Integer projectId);
 
     void insertTagRelationShip(@Param("tagIdList") List<Integer> tagIdList, @Param("projectId") Integer projectId);
+
+    List<PortalTypeVO> selectPortalTypeVOList();
+
+    DetailProjectVO selectDetailProjectVO(Integer projectId);
 }

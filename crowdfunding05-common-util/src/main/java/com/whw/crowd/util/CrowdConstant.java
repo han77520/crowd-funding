@@ -31,6 +31,7 @@ public class CrowdConstant {
     public static final String ATTR_NAME_PAGE_INFO = "pageInfo";
     public static final String ATTR_NAME_MESSAGE = "message";
     public static final String ATTR_NAME_TEMPLE_PROJECT = "tempProject";
+    public static final String ATTR_NAME_PORTAL = "portal_data";
 
     public static final String REDIS_CODE_PREFIX = "redis_code_prefix_";
 }

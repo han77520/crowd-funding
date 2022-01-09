@@ -2,10 +2,7 @@ package com.whw.crowd.controller;
 
 import com.whw.crowd.api.MySQLRemoteService;
 import com.whw.crowd.config.OSSProperties;
-import com.whw.crowd.entity.vo.MemberConfirmInfoVO;
-import com.whw.crowd.entity.vo.MemberLoginVO;
-import com.whw.crowd.entity.vo.ProjectVO;
-import com.whw.crowd.entity.vo.ReturnVO;
+import com.whw.crowd.entity.vo.*;
 import com.whw.crowd.util.CrowdConstant;
 import com.whw.crowd.util.CrowdUtil;
 import com.whw.crowd.util.ResultEntity;
@@ -14,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +34,21 @@ public class ProjectController {
 
     @Autowired
     private MySQLRemoteService mySQLRemoteService;
+
+
+    @RequestMapping("/get/project/detail/{projectId}")
+    public String getProjectDetail(@PathVariable("projectId") Integer projectId,ModelMap modelMap) {
+
+        ResultEntity<DetailProjectVO> resultEntity = mySQLRemoteService.getDetailProjectVORemote(projectId);
+
+        if (ResultEntity.SUCCESS.equals(resultEntity.getResult())) {
+            DetailProjectVO detailProjectVO = resultEntity.getData();
+
+            modelMap.addAttribute("detailProjectVO",detailProjectVO);
+        }
+
+        return "project_detail";
+    }
 
     @RequestMapping("/create/confirm")
     public String saveConfirm(ModelMap modelMap,

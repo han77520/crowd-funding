@@ -25,3 +25,6 @@ zuul:
     crowd-project:
       service-id: whw-crowd-project
       path: /project/**
+    crowd-order:
+      service-id: whw-crowd-order
+      path: /order/**

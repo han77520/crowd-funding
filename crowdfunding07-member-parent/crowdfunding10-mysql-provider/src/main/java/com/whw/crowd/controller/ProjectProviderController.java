@@ -1,6 +1,7 @@
 package com.whw.crowd.controller;
 
 import com.whw.crowd.entity.vo.DetailProjectVO;
+import com.whw.crowd.entity.vo.OrderProjectVO;
 import com.whw.crowd.entity.vo.PortalTypeVO;
 import com.whw.crowd.entity.vo.ProjectVO;
 import com.whw.crowd.service.api.ProjectService;
@@ -20,6 +21,7 @@ public class ProjectProviderController {
 
     @Autowired
     private ProjectService projectService;
+
 
     @RequestMapping("/get/project/detail/remote/{projectId}")
     public ResultEntity<DetailProjectVO> getDetailProjectVORemote(@PathVariable("projectId") Integer projectId) {

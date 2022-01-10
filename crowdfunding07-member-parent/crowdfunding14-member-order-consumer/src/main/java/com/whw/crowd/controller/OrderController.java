@@ -58,6 +58,7 @@ public class OrderController {
 
         ResultEntity<List<AddressVO>> resultEntity = mySQLRemoteService.getAddressVORemote(memberLoginVO.getId());
 
+
         if (ResultEntity.SUCCESS.equals(resultEntity.getResult())) {
             List<AddressVO> data = resultEntity.getData();
             session.setAttribute("addressVOList",data);

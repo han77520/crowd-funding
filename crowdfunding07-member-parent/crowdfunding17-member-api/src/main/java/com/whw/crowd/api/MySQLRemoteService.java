@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @author Han77
- * @Description:
+ * @Description: MySQL接口
  * @date 2022-01-05 8:35
  */
 @FeignClient("whw-crowd-mysql")

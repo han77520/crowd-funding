@@ -88,7 +88,7 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                    class="glyphicon glyphicon-user"></i> [[${session.loginMember.username]]]<span
+                                    class="glyphicon glyphicon-user"></i> [[${session.loginMember.username}]]<span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
@@ -283,15 +283,15 @@
                                 <div class="col-md-12 column" style="padding:0 120px;">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="optionsRadios1" id="optionsRadios1"
-                                                   value="option1" checked>
+                                            <input type="radio" name="invoiceRadio" id="optionsRadios1"
+                                                   value="0" checked>
                                             无需发票
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="optionsRadios1" id="optionsRadios2"
-                                                   value="option2">
+                                            <input type="radio" name="invoiceRadio" id="optionsRadios2"
+                                                   value="1">
                                             需要发票
                                         </label>
                                     </div>
@@ -308,7 +308,8 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">发票抬头（*）</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" style="width:200px;"
+                                                            <input type="text" name="invoiceTitle" class="form-control"
+                                                                   style="width:200px;"
                                                                    placeholder="个人">
                                                         </div>
                                                     </div>
@@ -363,7 +364,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">备注</label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" rows="1"
+                                            <textarea class="form-control" rows="1" name="remark"
                                                       placeholder="填写关于回报或发起人希望您备注的信息"></textarea>
                                         </div>
                                     </div>
@@ -398,8 +399,7 @@
                                             </li>
                                             <li style="margin-top:10px;">
                                                 <button disabled="disabled" id="payBtn" type="button"
-                                                        class="btn btn-warning btn-lg"
-                                                        onclick="window.location.href='pay-step-3.html'"><i
+                                                        class="btn btn-warning btn-lg"><i
                                                         class="glyphicon glyphicon-credit-card"></i> 立即付款
                                                 </button>
                                             </li>
@@ -476,6 +476,20 @@
 <script src="script/back-to-top.js"></script>
 <script>
 
+    $("#payBtn").click(function () {
+        var addressId = $("[name=addressId]:checked").val();
+        var invoice = $("[name=invoiceRadio]:checked").val();
+        var invoiceTitle = $.trim($("[name=invoiceTitle]").val());
+        var remark = $.trim($("[name=remark]").val());
+
+        $("#summaryForm")
+            .append("<input type='hidden' name='addressId' value='"+addressId+"'>")
+            .append("<input type='hidden' name='invoice' value='"+invoice+"'>")
+            .append("<input type='hidden' name='invoiceTitle' value='"+invoiceTitle+"'>")
+            .append("<input type='hidden' name='orderRemark' value='"+remark+"'>")
+            .submit();
+    })
+
     $("#knowRoleCheckBox").click(function () {
         var currentStatus = this.checked;
 
@@ -487,7 +501,7 @@
     });
 
     $('#myTab a').click(function (e) {
-        e.preventDefault()
+        e.preventDefault();
         $(this).tab('show')
     })
 </script>

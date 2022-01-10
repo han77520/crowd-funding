@@ -28,3 +28,6 @@ zuul:
     crowd-order:
       service-id: whw-crowd-order
       path: /order/**
+    crowd-pay:
+      service-id: whw-crowd-pay
+      path: /pay/**

@@ -2,6 +2,7 @@ package com.whw.crowd.controller;
 
 import com.whw.crowd.entity.vo.AddressVO;
 import com.whw.crowd.entity.vo.OrderProjectVO;
+import com.whw.crowd.entity.vo.OrderVO;
 import com.whw.crowd.service.api.OrderService;
 import com.whw.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,22 @@ public class OrderProviderController {
     @Autowired
     private OrderService orderService;
 
+
+    @RequestMapping("/save/order/remote")
+    ResultEntity<String> saveOrderRemote(@RequestBody OrderVO orderVO) {
+
+        try {
+            orderService.saveOrder(orderVO);
+
+            return ResultEntity.successWithoutData();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultEntity.failed(e.getMessage());
+        }
+    }
+
     @RequestMapping("/save/address/vo/remote")
-    public ResultEntity<String> saveAddressRemote(@RequestBody AddressVO addressVO){
+    public ResultEntity<String> saveAddressRemote(@RequestBody AddressVO addressVO) {
         try {
             orderService.saveAddress(addressVO);
 
@@ -52,7 +67,7 @@ public class OrderProviderController {
 
     @RequestMapping("/get/order/project/vo/remote")
     public ResultEntity<OrderProjectVO> getOrderProjectVoRemote(@RequestParam("projectId") Integer projectId,
-                                                         @RequestParam("returnId") Integer returnId) {
+                                                                @RequestParam("returnId") Integer returnId) {
 
         try {
             OrderProjectVO orderProjectVO = orderService.getOrderProjectVO(projectId, returnId);

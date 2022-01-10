@@ -1,75 +1,83 @@
 package com.whw.crowd.entity.po;
 
 public class OrderPO {
-    private Long id;
+    private Integer id;
 
-    private Long userId;
+    private String orderNum;
 
-    private Long productId;
+    private String payOrderNum;
 
-    private Integer count;
+    private Double orderAmount;
 
-    private Long money;
+    private Integer invoice;
 
-    private Integer status;
+    private String invoiceTitle;
 
-    public OrderPO() {
-    }
+    private String orderRemark;
 
-    public OrderPO(Long id, Long userId, Long productId, Integer count, Long money, Integer status) {
-        this.id = id;
-        this.userId = userId;
-        this.productId = productId;
-        this.count = count;
-        this.money = money;
-        this.status = status;
-    }
+    private String addressId;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getOrderNum() {
+        return orderNum;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum == null ? null : orderNum.trim();
     }
 
-    public Long getProductId() {
-        return productId;
+    public String getPayOrderNum() {
+        return payOrderNum;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setPayOrderNum(String payOrderNum) {
+        this.payOrderNum = payOrderNum == null ? null : payOrderNum.trim();
     }
 
-    public Integer getCount() {
-        return count;
+    public Double getOrderAmount() {
+        return orderAmount;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setOrderAmount(Double orderAmount) {
+        this.orderAmount = orderAmount;
     }
 
-    public Long getMoney() {
-        return money;
+    public Integer getInvoice() {
+        return invoice;
     }
 
-    public void setMoney(Long money) {
-        this.money = money;
+    public void setInvoice(Integer invoice) {
+        this.invoice = invoice;
     }
 
-    public Integer getStatus() {
-        return status;
+    public String getInvoiceTitle() {
+        return invoiceTitle;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setInvoiceTitle(String invoiceTitle) {
+        this.invoiceTitle = invoiceTitle == null ? null : invoiceTitle.trim();
+    }
+
+    public String getOrderRemark() {
+        return orderRemark;
+    }
+
+    public void setOrderRemark(String orderRemark) {
+        this.orderRemark = orderRemark == null ? null : orderRemark.trim();
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId == null ? null : addressId.trim();
     }
 }

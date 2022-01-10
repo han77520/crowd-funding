@@ -2,8 +2,11 @@ package com.whw.crowd.service.impl;
 
 import com.whw.crowd.entity.po.AddressPO;
 import com.whw.crowd.entity.po.AddressPOExample;
+import com.whw.crowd.entity.po.OrderPO;
+import com.whw.crowd.entity.po.OrderProjectPO;
 import com.whw.crowd.entity.vo.AddressVO;
 import com.whw.crowd.entity.vo.OrderProjectVO;
+import com.whw.crowd.entity.vo.OrderVO;
 import com.whw.crowd.mapper.AddressPOMapper;
 import com.whw.crowd.mapper.OrderPOMapper;
 import com.whw.crowd.mapper.OrderProjectPOMapper;
@@ -69,5 +72,26 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(addressVO,addressPO);
 
         addressPOMapper.insert(addressPO);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveOrder(OrderVO orderVO) {
+
+        OrderPO orderPO = new OrderPO();
+
+        BeanUtils.copyProperties(orderVO,orderPO);
+
+        OrderProjectPO orderProjectPO = new OrderProjectPO();
+
+        BeanUtils.copyProperties(orderVO.getOrderProjectVO(),orderProjectPO);
+
+        orderPOMapper.insert(orderPO);
+
+        Integer orderPOId = orderPO.getId();
+
+        orderProjectPO.setOrderId(orderPOId);
+
+        orderProjectPOMapper.insert(orderProjectPO);
     }
 }

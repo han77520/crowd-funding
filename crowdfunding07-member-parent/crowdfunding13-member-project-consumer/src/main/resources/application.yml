@@ -19,7 +19,7 @@ eureka:
 aliyun:
   oss:
     access-key-id: LTAI5tQa7eQC5BRkgFW3H1WF
-    access-key-secret: UpqIbLxihIpzJ85qR2v2FYQYxBqEH3
+    access-key-secret: 具体信息看本地保存的文档
     bucket-domain:  http://crowd-funding-han77.oss-cn-beijing.aliyuncs.com
     bucket-name: crowd-funding-han77
     end-point: http://oss-cn-beijing.aliyuncs.com
